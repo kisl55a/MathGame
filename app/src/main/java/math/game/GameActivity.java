@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import java.util.Random;
 
+import static java.lang.Math.floor;
+
 public class GameActivity extends AppCompatActivity implements View.OnClickListener{
     int correctAnswer;
     Button buttonObjectChoice1;
@@ -17,6 +19,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     Button buttonObjectChoice3;
     TextView textObjectPartA;
     TextView textObjectPartB;
+    TextView textObjectParam;
     TextView textObjectScore;
     TextView textObjectLevel;
     int currentScore = 0;
@@ -25,23 +28,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-//        int partA = 9;
-//        int partB = 9;
-//        correctAnswer = partA * partB;
-//        int wrongAnswer1 = correctAnswer - 1;
-//        int wrongAnswer2 = correctAnswer + 1;
         textObjectPartA =(TextView)findViewById(R.id.textPartA);
         textObjectPartB =(TextView)findViewById(R.id.textPartB);
+        textObjectParam =(TextView)findViewById(R.id.textParam);
         buttonObjectChoice2 =(Button)findViewById(R.id.buttonChoice2);
         buttonObjectChoice3 =(Button)findViewById(R.id.buttonChoice3);
         buttonObjectChoice1 =(Button)findViewById(R.id.buttonChoice1);
         textObjectScore = (TextView)findViewById(R.id.textScore);
         textObjectLevel = (TextView)findViewById(R.id.textLevel);
-//        textObjectPartA.setText("" + partA);
-//        textObjectPartB.setText("" + partB);
-//        buttonObjectChoice1.setText("" + correctAnswer);
-//        buttonObjectChoice2.setText("" + wrongAnswer1);
-//        buttonObjectChoice3.setText("" + wrongAnswer2);
         buttonObjectChoice1.setOnClickListener(this);
         buttonObjectChoice2.setOnClickListener(this);
         buttonObjectChoice3.setOnClickListener(this);
@@ -65,6 +59,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         updateScoreAndLevel(answerGiven);
         setQuestion();
     }
+    static boolean isInt(String s)
+    {
+        try
+        { int i = Integer.parseInt(s); return true; }
+
+        catch(NumberFormatException er)
+        { return false; }
+    }
+
     void setQuestion(){
         int numberRange = currentLevel * 3;
         Random randInt = new Random();
@@ -72,7 +75,33 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         partA++;
         int partB = randInt.nextInt(numberRange);
         partB++;
-        correctAnswer = partA * partB;
+        int accumulator;
+        if(partA % 3 == 2) {
+            correctAnswer = partA * partB;
+            textObjectParam.setText("x");
+        }
+//        if(partA % 4 != 0) {
+//            if(partA > partB) {
+//               partA = partA % partB + partA;
+//                correctAnswer = partA / partB;
+//                textObjectParam.setText("/");
+//            } else {
+//                accumulator = partB;
+//                partB = partB % partA - partB;
+//                partA = accumulator;
+//                correctAnswer =  partB / partA;
+//                textObjectParam.setText("/");
+//            }
+//        }
+        if(partA % 3 == 0) {
+            correctAnswer = partA + partB;
+            textObjectParam.setText("+");
+        }
+        if(partA % 3 == 1) {
+            correctAnswer = partA - partB;
+            textObjectParam.setText("-");
+        }
+
         int wrongAnswer1 = correctAnswer-2;
         int wrongAnswer2 = correctAnswer+2;
         textObjectPartA.setText(""+partA);
