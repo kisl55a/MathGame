@@ -21,4 +21,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button buttonPlay = (Button)findViewById(R.id.buttonPlay);
         buttonPlay.setOnClickListener(this);
     }
+    public void exit(View view) {
+        finishAffinity();
+        System.exit(0);
+    }
 }
