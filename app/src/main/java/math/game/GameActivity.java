@@ -76,28 +76,20 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         int partB = randInt.nextInt(numberRange);
         partB++;
         int accumulator;
-        if(partA % 3 == 2) {
+        if(partA % 4 == 2) {
             correctAnswer = partA * partB;
             textObjectParam.setText("x");
         }
-//        if(partA % 4 != 0) {
-//            if(partA > partB) {
-//               partA = partA % partB + partA;
-//                correctAnswer = partA / partB;
-//                textObjectParam.setText("/");
-//            } else {
-//                accumulator = partB;
-//                partB = partB % partA - partB;
-//                partA = accumulator;
-//                correctAnswer =  partB / partA;
-//                textObjectParam.setText("/");
-//            }
-//        }
-        if(partA % 3 == 0) {
+        if(partA % 4 == 3) {
+            partA = partA * partB;
+            correctAnswer = partA / partB;
+            textObjectParam.setText("/");
+        }
+        if(partA % 4 == 0) {
             correctAnswer = partA + partB;
             textObjectParam.setText("+");
         }
-        if(partA % 3 == 1) {
+        if(partA % 4 == 1) {
             correctAnswer = partA - partB;
             textObjectParam.setText("-");
         }
